@@ -168,7 +168,7 @@ def doDisambiguation(num, l):
         da_list.append(GetDisambiguation(tw))
     # result_q.put(str(da_list))
     print(str(da_list))
-    with open(str(num) + '_list.txt', 'wb') as fp:
+    with open(str(num) + '_list.txt', 'w') as fp:
         fp.write(str(da_list))
     print(str(num) + ' : file saved')
 
