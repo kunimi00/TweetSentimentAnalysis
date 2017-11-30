@@ -129,8 +129,8 @@ def GetDisambiguation(tweet_sentence):
     replaced_tweet = replace_word(cleaned_tweet)
     
     ## Can replace this by using other WSD options (different Lesk algorithms / similarity options)
-    # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+    da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    # da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
     
     return da_token_pair_list
 
