@@ -212,8 +212,6 @@ for word in custom_words_set:
             if j.antonyms(): 
                 custom_synset_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
 
-
-
 SentiGraphFeature = []
 
 # for i in tqdm(range(len(tweets))):

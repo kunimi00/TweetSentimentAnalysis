@@ -156,32 +156,53 @@ def GetDisambiguation(tweet_sentence):
 # print('Done')
 
 
-from multiprocessing import Process, Queue
+from multiprocessing import Process, Queue, Manager
 import pickle
 
+manager = Manager()
+result_q = Queue()
 
-def getDisambiguatedList(tweet_list, da_pair_list):
-    score_list = []
-    for tw in tqdm(tweet_list):
-        score_list.append(GetDisambiguation(tw))
-    da_pair_list.extend(score_list)
-
-def doDisambiguation(q, l, da_pair_list):
-    q.put(getDisambiguatedList(l, da_pair_list))
+def doDisambiguation(result_q, l):
+    da_list = []
+    for tw in tqdm(l):
+        da_list.append(GetDisambiguation(tw))
+    result_q.put(str(da_list))
+    print(str(da_list))
 
 da_pair_list = []
-tweet_partition_num = len(tweets)//2
 
-q = Queue()
+p1 = Process(target=doDisambiguation, args=(result_q, tweets[:2000]))
+p2 = Process(target=doDisambiguation, args=(result_q, tweets[2000:4000]))
+p3 = Process(target=doDisambiguation, args=(result_q, tweets[4000:6000]))
+p4 = Process(target=doDisambiguation, args=(result_q, tweets[6000:8000]))
+p5 = Process(target=doDisambiguation, args=(result_q, tweets[8000:10000]))
+p6 = Process(target=doDisambiguation, args=(result_q, tweets[10000:]))
 
-p1 = Process(target=doDisambiguation, args=(q, tweets[:tweet_partition_num], da_pair_list))
-p2 = Process(target=doDisambiguation, args=(q, tweets[tweet_partition_num:], da_pair_list))
 p1.start()
 p2.start()
-print('got results')
+p3.start()
+p4.start()
+p5.start()
+p6.start()
+
+# for _ in range(2):
+#     da_pair_list.append(q.get())
+#     print('got results2')
 
 p1.join()
 p2.join()
+p3.join()
+p4.join()
+p5.join()
+p6.join()
+
+
+da_pair_list.append(result_q.get())
+da_pair_list.append(result_q.get())
+da_pair_list.append(result_q.get())
+da_pair_list.append(result_q.get())
+da_pair_list.append(result_q.get())
+da_pair_list.append(result_q.get())
 
 with open('./da_pair_list.p', 'wb') as fp:
     pickle.dump(da_pair_list, fp)
