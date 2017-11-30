@@ -179,8 +179,12 @@ p1 = Process(target=doDisambiguation, args=(q, tweets[:tweet_partition_num]))
 p2 = Process(target=doDisambiguation, args=(q, tweets[tweet_partition_num:]))
 p1.start()
 p2.start()
+p1.join()
+p2.join()
 r1 = q.get()
 r2 = q.get()
+
+
 
 da_pair_list.extend(r1)
 da_pair_list.extend(r2)
