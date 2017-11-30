@@ -166,9 +166,8 @@ def doDisambiguation(num, l):
     da_list = []
     for tw in tqdm(l):
         da_list.append(GetDisambiguation(tw))
-    # result_q.put(str(da_list))
     print(str(da_list))
-    with open(str(num) + '_list.txt', 'w') as fp:
+    with open(str(num) + '_wsd_res_similarity.txt', 'w') as fp:
         fp.write(str(da_list))
     print(str(num) + ' : file saved')
 
@@ -176,12 +175,14 @@ def doDisambiguation(num, l):
 
 da_pair_list = []
 
-p1 = Process(target=doDisambiguation, args=(1, tweets[:2000]))
-p2 = Process(target=doDisambiguation, args=(2, tweets[2000:4000]))
-p3 = Process(target=doDisambiguation, args=(3, tweets[4000:6000]))
-p4 = Process(target=doDisambiguation, args=(4, tweets[6000:8000]))
-p5 = Process(target=doDisambiguation, args=(5, tweets[8000:10000]))
-p6 = Process(target=doDisambiguation, args=(6, tweets[10000:]))
+p1 = Process(target=doDisambiguation, args=(1, tweets[:1500]))
+p2 = Process(target=doDisambiguation, args=(2, tweets[1500:3000]))
+p3 = Process(target=doDisambiguation, args=(3, tweets[3000:4500]))
+p4 = Process(target=doDisambiguation, args=(4, tweets[4500:6000]))
+p5 = Process(target=doDisambiguation, args=(5, tweets[6000:7500]))
+p6 = Process(target=doDisambiguation, args=(6, tweets[7500:9000]))
+p7 = Process(target=doDisambiguation, args=(7, tweets[9000:10500]))
+p8 = Process(target=doDisambiguation, args=(8, tweets[10500:]))
 
 p1.start()
 p2.start()
@@ -189,10 +190,9 @@ p3.start()
 p4.start()
 p5.start()
 p6.start()
+p7.start()
+p8.start()
 
-# for _ in range(2):
-#     da_pair_list.append(q.get())
-#     print('got results2')
 
 p1.join()
 p2.join()
@@ -200,21 +200,9 @@ p3.join()
 p4.join()
 p5.join()
 p6.join()
+p7.join()
+p8.join()
 
 
-# da_pair_list.append(result_q.get())
-# da_pair_list.append(result_q.get())
-# da_pair_list.append(result_q.get())
-# da_pair_list.append(result_q.get())
-# da_pair_list.append(result_q.get())
-# da_pair_list.append(result_q.get())
-
-# with open('./da_pair_list.p', 'wb') as fp:
-#     pickle.dump(da_pair_list, fp)
-
-# with open('./da_pair_list.p', 'rb') as fp:
-#     loaded_pair = pickle.load(fp)
-
-# print(len(loaded_pair))
 print('Done')
 
