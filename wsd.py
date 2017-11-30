@@ -162,21 +162,26 @@ import pickle
 manager = Manager()
 result_q = Queue()
 
-def doDisambiguation(result_q, l):
+def doDisambiguation(num, l):
     da_list = []
     for tw in tqdm(l):
         da_list.append(GetDisambiguation(tw))
-    result_q.put(str(da_list))
+    # result_q.put(str(da_list))
     print(str(da_list))
+    with open(str(num) + '_list.txt', 'wb') as fp:
+        fp.write(str(da_list))
+    print(str(num) + ' : file saved')
+
+
 
 da_pair_list = []
 
-p1 = Process(target=doDisambiguation, args=(result_q, tweets[:2000]))
-p2 = Process(target=doDisambiguation, args=(result_q, tweets[2000:4000]))
-p3 = Process(target=doDisambiguation, args=(result_q, tweets[4000:6000]))
-p4 = Process(target=doDisambiguation, args=(result_q, tweets[6000:8000]))
-p5 = Process(target=doDisambiguation, args=(result_q, tweets[8000:10000]))
-p6 = Process(target=doDisambiguation, args=(result_q, tweets[10000:]))
+p1 = Process(target=doDisambiguation, args=(1, tweets[:2000]))
+p2 = Process(target=doDisambiguation, args=(2, tweets[2000:4000]))
+p3 = Process(target=doDisambiguation, args=(3, tweets[4000:6000]))
+p4 = Process(target=doDisambiguation, args=(4, tweets[6000:8000]))
+p5 = Process(target=doDisambiguation, args=(5, tweets[8000:10000]))
+p6 = Process(target=doDisambiguation, args=(6, tweets[10000:]))
 
 p1.start()
 p2.start()
@@ -197,19 +202,19 @@ p5.join()
 p6.join()
 
 
-da_pair_list.append(result_q.get())
-da_pair_list.append(result_q.get())
-da_pair_list.append(result_q.get())
-da_pair_list.append(result_q.get())
-da_pair_list.append(result_q.get())
-da_pair_list.append(result_q.get())
+# da_pair_list.append(result_q.get())
+# da_pair_list.append(result_q.get())
+# da_pair_list.append(result_q.get())
+# da_pair_list.append(result_q.get())
+# da_pair_list.append(result_q.get())
+# da_pair_list.append(result_q.get())
 
-with open('./da_pair_list.p', 'wb') as fp:
-    pickle.dump(da_pair_list, fp)
+# with open('./da_pair_list.p', 'wb') as fp:
+#     pickle.dump(da_pair_list, fp)
 
-with open('./da_pair_list.p', 'rb') as fp:
-    loaded_pair = pickle.load(fp)
+# with open('./da_pair_list.p', 'rb') as fp:
+#     loaded_pair = pickle.load(fp)
 
-print(len(loaded_pair))
+# print(len(loaded_pair))
 print('Done')
 
