@@ -218,9 +218,8 @@ def GetSentenceSentiScore(tweet_sentence, label, graph, cmp_ss_pair_lists):
     replaced_tweet = replace_word(cleaned_tweet)
     
     ## Can replace this by using other WSD options (different Lesk algorithms / similarity options)
-    
-#     da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+    da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    # da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
     
     da_token_list = []
     for pair in da_token_pair_list:
@@ -285,8 +284,7 @@ for word in custom_words_set:
         # if i.pos() in ['a', 's', 'r', 'v']: # no nouns
         for j in i.lemmas(): 
             if j.antonyms(): 
-                ## NOTE that we put antonyms first
-                custom_synset_pair_list.append((j.antonyms()[0].synset().name(), j.synset().name()))
+                custom_synset_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
 
 
 
@@ -295,7 +293,7 @@ SentiGraphFeature = []
 
 for i in tqdm(range(len(tweets))):
 	start = time.time()
-	SentiGraphFeature.append(GetSentenceSentiScore(tweets[i], labels[i], wordnet_graph_synset_cleaned, [bingliu_pos_synset_pair_list]))
+	SentiGraphFeature.append(GetSentenceSentiScore(tweets[i], labels[i], wordnet_graph_synset_cleaned, [bingliu_neg_synset_pair_list]))
 	print(time.time()-start)
 
 import pickle
