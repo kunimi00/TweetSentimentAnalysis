@@ -125,28 +125,98 @@ def GetDisambiguation(tweet_sentence):
     replaced_tweet = replace_word(cleaned_tweet)
     
     ## Can replace this by using other WSD options (different Lesk algorithms / similarity options)
-    da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    # da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+    # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
     
     return da_token_pair_list
 
 
 
-da_pair_list = []
+# da_pair_list = []
+# # for i in tqdm(range(len(tweets))):
+
 # for i in tqdm(range(len(tweets))):
+#     start = time.time()
+#     da_pair_list.append(GetDisambiguation(tweets[i]))
+#     print(time.time()-start)
 
-for i in tqdm(range(len(tweets))):
-    start = time.time()
-    da_pair_list.append(GetDisambiguation(tweets[i]))
-    print(time.time()-start)
+# import pickle
 
+# with open('./da_pair_list.p', 'wb') as fp:
+#     pickle.dump(SentiGraphFeature, fp)
+
+# with open('./da_pair_list.p', 'rb') as fp:
+# 	loaded_pair = pickle.load(fp)
+
+# print(len(loaded_score))
+# print('Done')
+
+
+from multiprocessing import Process, Queue
 import pickle
 
+
+def getDisambiguatedList(tweet_list):
+    score_list = []
+    for tw in tweet_list:
+        score_list.append(GetDisambiguation(tw))
+    return score_list
+
+def doDisambiguation(q, l):
+    q.put(getDisambiguatedList(l))
+
+
+da_pair_list = []
+tweet_partition_num = len(tweets)//2
+
+q = Queue()
+
+p1 = Process(target=doDisambiguation, args=(q, tweets[:tweet_partition_num]))
+p2 = Process(target=doDisambiguation, args=(q, tweets[tweet_partition_num:]))
+p1.start()
+p2.start()
+r1 = q.get()
+r2 = q.get()
+
+da_pair_list.extend(r1)
+da_pair_list.extend(r2)
+
+
 with open('./da_pair_list.p', 'wb') as fp:
-    pickle.dump(SentiGraphFeature, fp)
+    pickle.dump(da_pair_list, fp)
 
 with open('./da_pair_list.p', 'rb') as fp:
-	loaded_pair = pickle.load(fp)
+    loaded_pair = pickle.load(fp)
 
-print(len(loaded_score))
+print(len(loaded_pair))
 print('Done')
+
+
+
+
+
+
+
+# from multiprocessing import Process, Queue
+
+# def do_sum(q,l):
+#     q.put(sum(l))
+
+# def main():
+#     my_list = range(1000000)
+
+#     q = Queue()
+
+#     p1 = Process(target=do_sum, args=(q,my_list[:500000]))
+#     p2 = Process(target=do_sum, args=(q,my_list[500000:]))
+#     p1.start()
+#     p2.start()
+#     r1 = q.get()
+#     r2 = q.get()
+#     print r1+r2
+
+# if __name__=='__main__':
+#     main()
+
+
+
