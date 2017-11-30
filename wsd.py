@@ -47,17 +47,21 @@ from pywsd.lesk import simple_lesk, original_lesk, cosine_lesk, adapted_lesk
 from pywsd import disambiguate
 from pywsd.similarity import max_similarity
 
+file_path = "./dataset/semEval_train_2016/semeval_train_B.txt"
 
-
-file_path = "./dataset/semEval_train_2016/semeval_train_A.txt"
 file = open(file_path,"r")
+
 labels = []
 tweets = []
+subjects = []
+
 for line in file:
     split_string = line.split("\t")
-    if len(split_string) == 2:
+    if len(split_string) == 3:
         tweets.append(split_string[0])
-        labels.append(split_string[1])
+        subjects.append(split_string[1])
+        labels.append(split_string[2])
+
 print(len(tweets))
 print(len(labels))
 print(tweets[0])
@@ -158,7 +162,7 @@ import pickle
 
 def getDisambiguatedList(tweet_list):
     score_list = []
-    for tw in tweet_list:
+    for tw in tqdm(tweet_list):
         score_list.append(GetDisambiguation(tw))
     return score_list
 
