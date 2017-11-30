@@ -160,35 +160,28 @@ from multiprocessing import Process, Queue
 import pickle
 
 
-def getDisambiguatedList(tweet_list):
+def getDisambiguatedList(tweet_list, da_pair_list):
     score_list = []
     for tw in tqdm(tweet_list):
         score_list.append(GetDisambiguation(tw))
-    return score_list
+    da_pair_list.extend(score_list)
 
-def doDisambiguation(q, l):
-    q.put(getDisambiguatedList(l))
-
+def doDisambiguation(q, l, da_pair_list):
+    q.put(getDisambiguatedList(l, da_pair_list))
 
 da_pair_list = []
 tweet_partition_num = len(tweets)//2
 
 q = Queue()
 
-p1 = Process(target=doDisambiguation, args=(q, tweets[:tweet_partition_num]))
-p2 = Process(target=doDisambiguation, args=(q, tweets[tweet_partition_num:]))
+p1 = Process(target=doDisambiguation, args=(q, tweets[:tweet_partition_num], da_pair_list))
+p2 = Process(target=doDisambiguation, args=(q, tweets[tweet_partition_num:], da_pair_list))
 p1.start()
 p2.start()
+print('got results')
+
 p1.join()
 p2.join()
-r1 = q.get()
-r2 = q.get()
-
-
-
-da_pair_list.extend(r1)
-da_pair_list.extend(r2)
-
 
 with open('./da_pair_list.p', 'wb') as fp:
     pickle.dump(da_pair_list, fp)
@@ -198,33 +191,4 @@ with open('./da_pair_list.p', 'rb') as fp:
 
 print(len(loaded_pair))
 print('Done')
-
-
-
-
-
-
-
-# from multiprocessing import Process, Queue
-
-# def do_sum(q,l):
-#     q.put(sum(l))
-
-# def main():
-#     my_list = range(1000000)
-
-#     q = Queue()
-
-#     p1 = Process(target=do_sum, args=(q,my_list[:500000]))
-#     p2 = Process(target=do_sum, args=(q,my_list[500000:]))
-#     p1.start()
-#     p2.start()
-#     r1 = q.get()
-#     r2 = q.get()
-#     print r1+r2
-
-# if __name__=='__main__':
-#     main()
-
-
 
