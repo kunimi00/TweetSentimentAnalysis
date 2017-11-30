@@ -47,7 +47,7 @@ from pywsd.lesk import simple_lesk, original_lesk, cosine_lesk, adapted_lesk
 from pywsd import disambiguate
 from pywsd.similarity import max_similarity
 
-file_path = "./dataset/semEval_train_2016/semeval_train_B.txt"
+file_path = "./dataset/semEval_train_2016/semeval_train_A.txt"
 
 file = open(file_path,"r")
 
@@ -57,10 +57,10 @@ subjects = []
 
 for line in file:
     split_string = line.split("\t")
-    if len(split_string) == 3:
+    if len(split_string) == 2:
         tweets.append(split_string[0])
-        subjects.append(split_string[1])
-        labels.append(split_string[2])
+        # subjects.append(split_string[1])
+        labels.append(split_string[1])
 
 print(len(tweets))
 print(len(labels))
