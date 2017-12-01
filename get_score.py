@@ -224,7 +224,11 @@ def GetSentenceSentiScore(one_tweet_triple_list, graph = wordnet_graph_synset_cl
 
 ## Custom word set
 custom_words_set = ['good', 'awesome', 'beautiful', 'boom', 'celebrate', 'charm', 'cheerful', 
-                    'clean', 'confident', 'convenient', 'cozy']
+                    'clean', 'confident', 'convenient', 'cozy', 'divine', 'easy', 'efficient',
+                    'elegant', 'encourage', 'enjoy', 'entertain', 'excelent', 'exciting', 'fabulous',
+                    'fresh', 'gentle', 'glad', 'generous', 'gorgeous', 'happy', 'joy', 'lovely', 
+                    'lucky', 'outstanding', 'pleasing', 'pride', 'proper', 'sexy', 'smart',
+                    'super', 'victory', 'wonderful' ]
 
 custom_synset_pair_list = []
 
@@ -251,6 +255,7 @@ def doGetSentenceSentiScore(num, l):
     with open(str(num) + '_distance_score.txt', 'w') as fp:
         for tw in tqdm(l):
             curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [custom_synset_pair_list])
+            # curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [bingliu_neg_synset_pair_list])
             fp.write("%s  %s \n" % (curr_tweet_words, curr_tw_score))
 
     print(str(num) + ' : file saved')
@@ -259,23 +264,23 @@ def doGetSentenceSentiScore(num, l):
 
 da_pair_list = []
 
-# p1 = Process(target=doGetSentenceSentiScore, args=(1, loaded_all_tweets_list[:1500]))
-# p2 = Process(target=doGetSentenceSentiScore, args=(2, loaded_all_tweets_list[1500:3000]))
-# p3 = Process(target=doGetSentenceSentiScore, args=(3, loaded_all_tweets_list[3000:4500]))
-# p4 = Process(target=doGetSentenceSentiScore, args=(4, loaded_all_tweets_list[4500:6000]))
-# p5 = Process(target=doGetSentenceSentiScore, args=(5, loaded_all_tweets_list[6000:7500]))
-# p6 = Process(target=doGetSentenceSentiScore, args=(6, loaded_all_tweets_list[7500:9000]))
-# p7 = Process(target=doGetSentenceSentiScore, args=(7, loaded_all_tweets_list[9000:10500]))
-# p8 = Process(target=doGetSentenceSentiScore, args=(8, loaded_all_tweets_list[10500:]))
+p1 = Process(target=doGetSentenceSentiScore, args=(1, loaded_all_tweets_list[:1500]))
+p2 = Process(target=doGetSentenceSentiScore, args=(2, loaded_all_tweets_list[1500:3000]))
+p3 = Process(target=doGetSentenceSentiScore, args=(3, loaded_all_tweets_list[3000:4500]))
+p4 = Process(target=doGetSentenceSentiScore, args=(4, loaded_all_tweets_list[4500:6000]))
+p5 = Process(target=doGetSentenceSentiScore, args=(5, loaded_all_tweets_list[6000:7500]))
+p6 = Process(target=doGetSentenceSentiScore, args=(6, loaded_all_tweets_list[7500:9000]))
+p7 = Process(target=doGetSentenceSentiScore, args=(7, loaded_all_tweets_list[9000:10500]))
+p8 = Process(target=doGetSentenceSentiScore, args=(8, loaded_all_tweets_list[10500:]))
 
-p1 = Process(target=doGetSentenceSentiScore, args=(1, loaded_all_tweets_list[:2]))
-p2 = Process(target=doGetSentenceSentiScore, args=(2, loaded_all_tweets_list[2:4]))
-p3 = Process(target=doGetSentenceSentiScore, args=(3, loaded_all_tweets_list[4:6]))
-p4 = Process(target=doGetSentenceSentiScore, args=(4, loaded_all_tweets_list[6:8]))
-p5 = Process(target=doGetSentenceSentiScore, args=(5, loaded_all_tweets_list[8:10]))
-p6 = Process(target=doGetSentenceSentiScore, args=(6, loaded_all_tweets_list[10:12]))
-p7 = Process(target=doGetSentenceSentiScore, args=(7, loaded_all_tweets_list[12:14]))
-p8 = Process(target=doGetSentenceSentiScore, args=(8, loaded_all_tweets_list[14:16]))
+# p1 = Process(target=doGetSentenceSentiScore, args=(1, loaded_all_tweets_list[:2]))
+# p2 = Process(target=doGetSentenceSentiScore, args=(2, loaded_all_tweets_list[2:4]))
+# p3 = Process(target=doGetSentenceSentiScore, args=(3, loaded_all_tweets_list[4:6]))
+# p4 = Process(target=doGetSentenceSentiScore, args=(4, loaded_all_tweets_list[6:8]))
+# p5 = Process(target=doGetSentenceSentiScore, args=(5, loaded_all_tweets_list[8:10]))
+# p6 = Process(target=doGetSentenceSentiScore, args=(6, loaded_all_tweets_list[10:12]))
+# p7 = Process(target=doGetSentenceSentiScore, args=(7, loaded_all_tweets_list[12:14]))
+# p8 = Process(target=doGetSentenceSentiScore, args=(8, loaded_all_tweets_list[14:16]))
 
 p1.start()
 p2.start()
