@@ -110,50 +110,53 @@ def negate(word_list):
     negged_sentence = neg_tagging(word_list)
     negged_tokens = negged_sentence.split()
 
-    tokens = []
-    token_pair_list = []
+    token_negation_pair_list = []
     
     for word in negged_tokens:
         negation = False
         if word.startswith('NEG_'):
             negation = True
             word = word[4:]
-        token_pair_list.append((word, negation))
-        tokens.append(word)
+        token_negation_pair_list.append((word, negation))
     
-    return tokens, token_pair_list
+    return token_negation_pair_list
 
+
+## Prepare synset dictionary
+
+synset_list = list(wordnet.all_synsets())
+synset_dict_ss_i = dict()
+synset_dict_i_ss = dict()
+for i, ss in enumerate(synset_list):
+    synset_dict_ss_i[ss.name()] = i
+    synset_dict_i_ss[i] = ss.name()
                 
+
+## Disambiguate each tweet with multicore processing
+
 def GetDisambiguation(tweet_sentence):
     cleaned_tweet = p.clean(tweet_sentence)
     replaced_tweet = replace_word(cleaned_tweet)
+
+    replaced_tweet_list = replaced_tweet.split(" ")
     
     ## Can replace this by using other WSD options (different Lesk algorithms / similarity options)
-    da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    # da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+
+    # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+
+    da_token_list = []
+    for pair in da_token_pair_list:
+        da_token_list.append(pair[0])
     
-    return da_token_pair_list
+    token_negation_pair_list = negate(da_token_list)
 
+    print(da_token_pair_list)
+    print(len(da_token_pair_list))
+    print(token_negation_pair_list)
+    print(len(token_negation_pair_list))
 
-
-# da_pair_list = []
-# # for i in tqdm(range(len(tweets))):
-
-# for i in tqdm(range(len(tweets))):
-#     start = time.time()
-#     da_pair_list.append(GetDisambiguation(tweets[i]))
-#     print(time.time()-start)
-
-# import pickle
-
-# with open('./da_pair_list.p', 'wb') as fp:
-#     pickle.dump(SentiGraphFeature, fp)
-
-# with open('./da_pair_list.p', 'rb') as fp:
-# 	loaded_pair = pickle.load(fp)
-
-# print(len(loaded_score))
-# print('Done')
+    return da_token_pair_list, token_negation_pair_list
 
 
 from multiprocessing import Process, Queue, Manager
@@ -163,13 +166,21 @@ manager = Manager()
 result_q = Queue()
 
 def doDisambiguation(num, l):
-    da_list = []
-    for tw in tqdm(l):
-        da_list.append(GetDisambiguation(tw))
-    print(str(da_list))
-    with open(str(num) + '_wsd_res_similarity.txt', 'w') as fp:
-        fp.write(str(da_list))
+
+    with open(str(num) + '_wsd_cosine_lesk.txt', 'w') as fp:
+        for tw in tqdm(l):
+            da_token_pair_list, token_negation_pair_list = GetDisambiguation(tw)
+            for i in range(len(da_token_pair_list)):
+                if da_token_pair_list[i][0] != "":
+                    fp.write("%s  " % da_token_pair_list[i][0])
+                else:
+                    fp.write("_  ")
+                fp.write("%s  " % da_token_pair_list[i][1])
+                fp.write("%s  " % token_negation_pair_list[i][1])
+            fp.write("\n") 
+
     print(str(num) + ' : file saved')
+    print('done')        
 
 
 
@@ -183,6 +194,16 @@ p5 = Process(target=doDisambiguation, args=(5, tweets[6000:7500]))
 p6 = Process(target=doDisambiguation, args=(6, tweets[7500:9000]))
 p7 = Process(target=doDisambiguation, args=(7, tweets[9000:10500]))
 p8 = Process(target=doDisambiguation, args=(8, tweets[10500:]))
+
+# p1 = Process(target=doDisambiguation, args=(1, tweets[:2]))
+# p2 = Process(target=doDisambiguation, args=(2, tweets[2:4]))
+# p3 = Process(target=doDisambiguation, args=(3, tweets[4:6]))
+# p4 = Process(target=doDisambiguation, args=(4, tweets[6:8]))
+# p5 = Process(target=doDisambiguation, args=(5, tweets[8:10]))
+# p6 = Process(target=doDisambiguation, args=(6, tweets[10:12]))
+# p7 = Process(target=doDisambiguation, args=(7, tweets[12:14]))
+# p8 = Process(target=doDisambiguation, args=(8, tweets[14:16]))
+
 
 p1.start()
 p2.start()
