@@ -30,8 +30,9 @@ from nltk.tokenize import word_tokenize
 from nltk.tokenize import TweetTokenizer
 
 from nltk.corpus import stopwords
-from nltk.corpus import wordnet
+# from nltk.corpus import wordnet
 from nltk.corpus import wordnet as wn
+from nltk.corpus.reader.wordnet import Synset
 from nltk.corpus import sentiwordnet as swn
 from nltk.corpus.reader import WordListCorpusReader
 from nltk.corpus import opinion_lexicon
@@ -54,16 +55,26 @@ verbose = False
 loadSavedGraph = False
 
 ## Load the disambiguated word list
-loaded_da_token_pair_list = []
+loaded_all_tweets_list = []
 for i in range(8):
     ## Either cosine_lesk ones OR res_similarity ones
-    with open(str(num) + '_wsd_cosine_lesk.txt', 'r') as f:
-        tmp_list = ast.literal_eval(f.read())
-        loaded_da_token_pair_list.extend(tmp_list)
+    with open(str(i+1) + '_wsd_cosine_lesk.txt', 'r') as f:
+        tmp_str = f.read()
+        tmp_list = tmp_str.split('\n')
+        tmp_list = tmp_list[:-1]
+
+        loaded_curr_file_list = []
+        for line in tmp_list:
+            ll = line.split("  ")[:-1]
+            curr_tweet = list()
+            for i in range(0, len(ll), 3):
+                curr_tweet.append([ll[i], ll[i+1], ll[i+2]])
+            loaded_curr_file_list.append(curr_tweet)
+
+        loaded_all_tweets_list.extend(loaded_curr_file_list)
 
 
 ## Prepare graphical model 
-
 if loadSavedGraph == False:
 
     synset_list = list(wn.all_synsets())
@@ -157,55 +168,50 @@ for word in opinion_lexicon.negative():
                 bingliu_neg_synset_pair_list.append((j.antonyms()[0].synset().name(), j.synset().name()))
 
 
-def GetSentenceSentiScore(da_token_pair_list, label, graph, cmp_ss_pair_lists):
-    
-    da_token_list = []
-    for pair in da_token_pair_list:
-        da_token_list.append(pair[0])
-    
-    tokens, token_pair_list = negate(da_token_list)
-    
+
+def GetSentenceSentiScore(one_tweet_triple_list, graph = wordnet_graph_synset_cleaned, 
+                        cmp_ss_pair_lists = [bingliu_pos_synset_pair_list, bingliu_neg_synset_pair_list]):
+
     if verbose:
         print("####### Tweet #######" )
         print("")
-        print(tweet_sentence)
-        print(" -> " + replaced_tweet)
-        print("")
-        print(da_token_list)
+        print(one_tweet_triple_list)
         print("") 
-        print(da_token_pair_list)
-        print("") 
-        print(token_pair_list)
-        print("")     
-    
-    assert(len(da_token_pair_list) == len(token_pair_list))
     
     score = 0
-    for j in range(len(da_token_pair_list)):
+    returning_tweet_words = ""
+    for j in range(len(one_tweet_triple_list)):
+
+        returning_tweet_words += one_tweet_triple_list[j][0] + " "
+
         curr_neg = False
-        if token_pair_list[j][1]:
+        if eval(one_tweet_triple_list[j][2]):
             if verbose:
-                print("negated : " + token_pair_list[j][0])
+                print("negated : " + one_tweet_triple_list[j][0])
             curr_neg = True
         
-        curr_ss = da_token_pair_list[j][1]
-        curr_score = 0
-        if curr_ss:
-            for cmp_ss_pair_list in cmp_ss_pair_lists:
-                for cmp_ss_pair in cmp_ss_pair_list:
-                    curr_score += DIST_synset(curr_ss.name(), graph, cmp_ss_pair[0], cmp_ss_pair[1])
-                curr_score /= len(cmp_ss_pair_list)
-            
-            if curr_neg:
-                curr_score *= -1
-            
-            if verbose:
-                print("   " + str(token_pair_list[j]) + " -> " + curr_ss.name() + " : " + str(curr_score))
-                print("   definition : " + wn.synset(curr_ss.name()).definition())
-                print("   score from graph : " + str(curr_score))
-                print("")
-            score += curr_score            
-            
+        tmp_str = one_tweet_triple_list[j][1][8:-2]
+        if len(tmp_str) > 0:
+            curr_ss = wn.synset(tmp_str)
+            curr_score = 0
+            if curr_ss:
+                for cmp_ss_pair_list in cmp_ss_pair_lists:
+                    for cmp_ss_pair in cmp_ss_pair_list:
+                        curr_score += DIST_synset(curr_ss.name(), graph, cmp_ss_pair[0], cmp_ss_pair[1])
+                    curr_score /= len(cmp_ss_pair_list)
+                
+                if curr_neg:
+                    curr_score *= -1
+                
+                if verbose:
+                    print("   " + str(one_tweet_triple_list[j]) + " -> " + curr_ss.name() + " : " + str(curr_score))
+                    print("   definition : " + wn.synset(curr_ss.name()).definition())
+                    print("   score from graph : " + str(curr_score))
+                    print("")
+                score += curr_score            
+                
+            else:
+                continue
         else:
             continue
 
@@ -213,11 +219,10 @@ def GetSentenceSentiScore(da_token_pair_list, label, graph, cmp_ss_pair_lists):
         print(">>> Tweet TOTAL score = " + str(score) + " / " + label)
         print("")
     
-    return score
+    return returning_tweet_words, score
 
 
 ## Custom word set
-'''
 custom_words_set = ['good', 'awesome', 'beautiful', 'boom', 'celebrate', 'charm', 'cheerful', 
                     'clean', 'confident', 'convenient', 'cozy']
 
@@ -229,47 +234,48 @@ for word in custom_words_set:
         for j in i.lemmas(): 
             if j.antonyms(): 
                 custom_synset_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
-'''
+
 
 
 
 
 ## Calculate the distance for each tweet with multicore processing
 
-'''
-SentiGraphFeature = []
-
-for i in tqdm(range(len(loaded_da_token_pair_list))):
-    start = time.time()
-    SentiGraphFeature.append(GetSentenceSentiScore(loaded_da_token_pair_list[i], wordnet_graph_synset_cleaned, [bingliu_pos_synset_pair_list, bingliu_neg_synset_pair_list]))
-    print(time.time()-start)
-'''
-
 from multiprocessing import Process
 import pickle
 
 
-def doDisambiguation(num, l):
-    da_list = []
-    for tw in tqdm(l):
-        da_list.append(GetDisambiguation(tw))
-    print(str(da_list))
-    with open(str(num) + '_wsd_cosine_lesk.txt', 'w') as fp:
-        fp.write(str(da_list))
-    print(str(num) + ' : file saved')
+# def GetSentenceSentiScore(one_tweet_triple_list, graph, cmp_ss_pair_lists)
 
+def doGetSentenceSentiScore(num, l):
+    with open(str(num) + '_distance_score.txt', 'w') as fp:
+        for tw in tqdm(l):
+            curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [custom_synset_pair_list])
+            fp.write("%s  %s \n" % (curr_tweet_words, curr_tw_score))
+
+    print(str(num) + ' : file saved')
+    print('done')
 
 
 da_pair_list = []
 
-p1 = Process(target=doDisambiguation, args=(1, tweets[:1500]))
-p2 = Process(target=doDisambiguation, args=(2, tweets[1500:3000]))
-p3 = Process(target=doDisambiguation, args=(3, tweets[3000:4500]))
-p4 = Process(target=doDisambiguation, args=(4, tweets[4500:6000]))
-p5 = Process(target=doDisambiguation, args=(5, tweets[6000:7500]))
-p6 = Process(target=doDisambiguation, args=(6, tweets[7500:9000]))
-p7 = Process(target=doDisambiguation, args=(7, tweets[9000:10500]))
-p8 = Process(target=doDisambiguation, args=(8, tweets[10500:]))
+# p1 = Process(target=doGetSentenceSentiScore, args=(1, loaded_all_tweets_list[:1500]))
+# p2 = Process(target=doGetSentenceSentiScore, args=(2, loaded_all_tweets_list[1500:3000]))
+# p3 = Process(target=doGetSentenceSentiScore, args=(3, loaded_all_tweets_list[3000:4500]))
+# p4 = Process(target=doGetSentenceSentiScore, args=(4, loaded_all_tweets_list[4500:6000]))
+# p5 = Process(target=doGetSentenceSentiScore, args=(5, loaded_all_tweets_list[6000:7500]))
+# p6 = Process(target=doGetSentenceSentiScore, args=(6, loaded_all_tweets_list[7500:9000]))
+# p7 = Process(target=doGetSentenceSentiScore, args=(7, loaded_all_tweets_list[9000:10500]))
+# p8 = Process(target=doGetSentenceSentiScore, args=(8, loaded_all_tweets_list[10500:]))
+
+p1 = Process(target=doGetSentenceSentiScore, args=(1, loaded_all_tweets_list[:2]))
+p2 = Process(target=doGetSentenceSentiScore, args=(2, loaded_all_tweets_list[2:4]))
+p3 = Process(target=doGetSentenceSentiScore, args=(3, loaded_all_tweets_list[4:6]))
+p4 = Process(target=doGetSentenceSentiScore, args=(4, loaded_all_tweets_list[6:8]))
+p5 = Process(target=doGetSentenceSentiScore, args=(5, loaded_all_tweets_list[8:10]))
+p6 = Process(target=doGetSentenceSentiScore, args=(6, loaded_all_tweets_list[10:12]))
+p7 = Process(target=doGetSentenceSentiScore, args=(7, loaded_all_tweets_list[12:14]))
+p8 = Process(target=doGetSentenceSentiScore, args=(8, loaded_all_tweets_list[14:16]))
 
 p1.start()
 p2.start()
@@ -295,21 +301,3 @@ print('Done')
 
 
 
-
-
-
-
-
-
-
-
-'''
-with open('./senti_score.p', 'wb') as fp:
-    pickle.dump(SentiGraphFeature, fp)
-
-with open('./senti_score.p', 'rb') as fp:
-	loaded_score = pickle.load(fp)
-
-print(len(loaded_score))
-print('Done')
-'''
