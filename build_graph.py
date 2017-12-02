@@ -41,6 +41,11 @@ from nltk.stem.wordnet import WordNetLemmatizer
 import nltk.sentiment
 
 
+## Better WSD library
+from pywsd.lesk import simple_lesk, original_lesk, cosine_lesk, adapted_lesk
+from pywsd import disambiguate
+from pywsd.similarity import max_similarity
+
 
 ## Negation
 
