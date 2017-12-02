@@ -30,7 +30,6 @@ from nltk.tokenize import word_tokenize
 from nltk.tokenize import TweetTokenizer
 
 from nltk.corpus import stopwords
-# from nltk.corpus import wordnet
 from nltk.corpus import wordnet as wn
 from nltk.corpus.reader.wordnet import Synset
 from nltk.corpus import sentiwordnet as swn
@@ -222,22 +221,93 @@ def GetSentenceSentiScore(one_tweet_triple_list, graph = wordnet_graph_synset_cl
     return returning_tweet_words, score
 
 
-## Custom word set
-custom_words_set = ['good', 'awesome', 'beautiful', 'boom', 'celebrate', 'charm', 'cheerful', 
+## Custom positive word set
+custom_words_set_pos = ['good', 'awesome', 'beautiful', 'boom', 'celebrate', 'charm', 'cheerful', 
                     'clean', 'confident', 'convenient', 'cozy', 'divine', 'easy', 'efficient',
                     'elegant', 'encourage', 'enjoy', 'entertain', 'excelent', 'exciting', 'fabulous',
                     'fresh', 'gentle', 'glad', 'generous', 'gorgeous', 'happy', 'joy', 'lovely', 
                     'lucky', 'outstanding', 'pleasing', 'pride', 'proper', 'sexy', 'smart',
-                    'super', 'victory', 'wonderful' ]
+                    'bright', 'comfortable', 'cool', 'faithful', 'famous', 'fine', 'handsome',
+                    'healthy', 'honor', 'prefer', 'improve', 'inspire', 'intelligent', 'master',
+                    'modest', 'nice', 'optimal', 'positive', 'peaceful', 'prosper', 'recommend',
+                    'super', 'victory', 'wonderful', 'refresh', 'satisfy', 'sensational', 'smooth', 
+                    'splendid', 'success', 'thoughtful', 'trust', 'win' ]
 
-custom_synset_pair_list = []
+custom_pos_synset_pair_list = []
 
-for word in custom_words_set:
+for word in custom_words_set_pos:
     for i in wn.synsets(word):
-        # if i.pos() in ['a', 's', 'r', 'v']: # no nouns
         for j in i.lemmas(): 
             if j.antonyms(): 
-                custom_synset_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
+                custom_pos_synset_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
+
+
+## Custom negative word set
+custom_words_set_neg = ['abnormal', 'abort', 'abuse', 'afraid', 'angry', 'arrogant', 'ashamed', 
+                    'awful', 'bad', 'bitch', 'blame', 'boring', 'brutal', 'bullshit',
+                    'cancer', 'chaotic', 'cheat', 'cocky', 'conflict', 'confuse', 'controversial',
+                    'corrupt', 'creepy', 'curse', 'dangerous', 'dead', 'defect', 'depression', 'destroy', 
+                    'die', 'dick', 'disappoint', 'disbelief', 'discomfort', 'disgraceful', 'disobey',
+                    'disturbing', 'dump', 'embarrass', 'error', 'exhaust', 'fail', 'fake', 
+                    'false', 'fool', 'freak', 'fraud', 'grief', 'hard', 'harmed', 'idiot',
+                    'ignorant', 'misfortune', 'mistake', 'murder', 'negative', 'painful', 'pervert', 
+                    'poor', 'problem', 'racist', 'reject', 'sad', 'scold', 'screwed', 'selfish',
+                    'silly', 'sloppy', 'stink', 'stupid', 'suck', 'terrible', 'trash', 'weak' ]
+
+custom_neg_synset_pair_list = []
+
+for word in custom_words_set_neg:
+    for i in wn.synsets(word):
+        for j in i.lemmas(): 
+            if j.antonyms(): 
+                custom_neg_synset_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
+
+
+
+
+
+
+# ## Custom positive selected synset set
+# custom_synsets_set_pos = ['good.a.01', 'amazing.s.02', 'beautiful.a.01', 'boom.n.03', 'celebrate.v.02', 'appeal.n.02', 'cheerful.a.01', 
+#                     'clean.a.01', 'confident.a.01', 'convenient.a.01', 'cozy.s.01', 'divine.s.01', 'easy.a.01', 'efficient.a.01',
+#                     'elegant.a.01', 'encourage.v.02', 'enjoy.v.01', 'entertain.v.01', 'excel.v.01', 'excite.v.01', 'fabulous.s.01',
+#                     'fresh', 'gentle', 'glad', 'generous', 'gorgeous', 'happy', 'joy', 'lovely', 
+#                     'lucky', 'outstanding', 'pleasing', 'pride', 'proper', 'sexy', 'smart',
+#                     'bright', 'comfortable', 'cool', 'faithful', 'famous', 'fine', 'handsome',
+#                     'healthy', 'honor', 'prefer', 'improve', 'inspire', 'intelligent', 'master',
+#                     'modest', 'nice', 'optimal', 'positive', 'peaceful', 'prosper', 'recommend',
+#                     'super', 'victory', 'wonderful', 'refresh', 'satisfy', 'sensational', 'smooth', 
+#                     'splendid', 'success', 'thoughtful', 'trust', 'win' ]
+
+# custom_pos_sel_ss_pair_list = []
+
+# for word in custom_synsets_set_pos:
+#     for i in wn.synsets(word):
+#         for j in i.lemmas(): 
+#             if j.antonyms(): 
+#                 custom_pos_sel_ss_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
+
+
+# ## Custom negative selected synset set
+# custom_synsets_set_neg = ['abnormal', 'abort', 'abuse', 'afraid', 'angry', 'arrogant', 'ashamed', 
+#                     'awful', 'bad', 'bitch', 'blame', 'boring', 'brutal', 'bullshit',
+#                     'cancer', 'chaotic', 'cheat', 'cocky', 'conflict', 'confuse', 'controversial',
+#                     'corrupt', 'creepy', 'curse', 'dangerous', 'dead', 'defect', 'depression', 'destroy', 
+#                     'die', 'dick', 'disappoint', 'disbelief', 'discomfort', 'disgraceful', 'disobey',
+#                     'disturbing', 'dump', 'embarrass', 'error', 'exhaust', 'fail', 'fake', 
+#                     'false', 'fool', 'freak', 'fraud', 'grief', 'hard', 'harmed', 'idiot',
+#                     'ignorant', 'misfortune', 'mistake', 'murder', 'negative', 'painful', 'pervert', 
+#                     'poor', 'problem', 'racist', 'reject', 'sad', 'scold', 'screwed', 'selfish',
+#                     'silly', 'sloppy', 'stink', 'stupid', 'suck', 'terrible', 'trash', 'weak' ]
+
+# custom_neg_sel_ss_pair_list = []
+
+# for word in custom_synsets_set_neg:
+#     for i in wn.synsets(word):
+#         for j in i.lemmas(): 
+#             if j.antonyms(): 
+#                 custom_neg_sel_ss_pair_list.append((j.synset().name(), j.antonyms()[0].synset().name()))
+
 
 
 
@@ -252,9 +322,10 @@ import pickle
 # def GetSentenceSentiScore(one_tweet_triple_list, graph, cmp_ss_pair_lists)
 
 def doGetSentenceSentiScore(num, l):
-    with open(str(num) + '_distance_score.txt', 'w') as fp:
+    with open('dscore_custom_neg' + str(num) + '.txt', 'w') as fp:
         for tw in tqdm(l):
-            curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [custom_synset_pair_list])
+            # curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [custom_pos_synset_pair_list])
+            curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [custom_neg_synset_pair_list])
             # curr_tweet_words, curr_tw_score = GetSentenceSentiScore(tw, cmp_ss_pair_lists = [bingliu_neg_synset_pair_list])
             fp.write("%s  %s \n" % (curr_tweet_words, curr_tw_score))
 
