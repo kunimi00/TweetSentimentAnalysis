@@ -115,8 +115,8 @@ for ss in tqdm(synset_list):
     df = ss.definition()
     
     # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    # curr_df_pair_list = disambiguate(df, cosine_lesk)
-    curr_df_pair_list = disambiguate(df, max_similarity, similarity_option='jcn')
+    curr_df_pair_list = disambiguate(df, cosine_lesk)
+    # curr_df_pair_list = disambiguate(df, max_similarity, similarity_option='jcn')
 
     df_pair_txt_list = []
     for curr_df_pair in curr_df_pair_list:
