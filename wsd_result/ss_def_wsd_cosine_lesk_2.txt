@@ -1,0 +1,30 @@
+dissilient.s.01
+bursting open with force, as do some ripe seed vessels
+bursting  Synset('burst.v.01')  False  open  Synset('open.a.01')  False  with  None  False  force  Synset('force.n.01')  False  ,  None  False  as  None  False  do  None  False  some  None  False  ripe  None  False  seed  Synset('seed.n.01')  False  vessels  Synset('vessel.n.01')  False  
+parturient.s.02
+giving birth
+giving  Synset('give.v.01')  False  birth  Synset('birth.n.01')  False  
+dying.a.01
+in or associated with the process of passing from life or ceasing to be
+in  None  False  or  None  False  associated  Synset('associate.v.01')  False  with  None  False  the  None  False  process  Synset('procedure.n.01')  False  of  None  False  passing  None  False  from  None  False  life  Synset('life.n.01')  False  or  None  False  ceasing  None  False  to  None  False  be  None  False  
+moribund.s.02
+being on the point of death; breathing your last
+being  None  False  on  None  False  the  None  False  point  Synset('point.n.01')  False  of  None  False  death  Synset('death.n.01')  False  ;  None  False  breathing  Synset('breathe.v.01')  False  your  None  False  last  Synset('last.a.02')  False  
+last.s.05
+occurring at the time of death
+occurring  Synset('happen.v.01')  False  at  None  False  the  None  False  time  Synset('time.n.01')  False  of  None  False  death  Synset('death.n.01')  False  
+abridged.a.01
+(used of texts) shortened by condensing or rewriting
+(  None  False  used  Synset('use.v.01')  False  of  None  False  texts  Synset('text.n.01')  False  )  None  False  shortened  Synset('shorten.v.01')  False  by  None  False  condensing  Synset('condense.v.01')  False  or  None  False  rewriting  Synset('rewrite.v.01')  False  
+cut.s.03
+with parts removed
+with  None  False  parts  Synset('part.n.01')  False  removed  Synset('remove.v.01')  False  
+half-length.s.02
+abridged to half its original length
+abridged  Synset('abridge.v.01')  False  to  None  False  half  None  False  its  None  False  original  Synset('original.a.03')  False  length  Synset('length.n.01')  False  
+potted.s.03
+(British informal) summarized or abridged
+(  None  False  British  Synset('british.a.01')  False  informal  None  False  )  None  False  summarized  Synset('sum_up.v.01')  False  or  None  False  abridged  Synset('abridge.v.01')  False  
+unabridged.a.01
+(used of texts) not shortened
+(  None  False  used  Synset('use.v.01')  False  of  None  False  texts  Synset('text.n.01')  False  )  None  False  not  None  False  shortened  Synset('shorten.v.01')  False  

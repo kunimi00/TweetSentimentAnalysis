@@ -89,7 +89,6 @@ def negate(word_list):
     negged_sentence = neg_tagging(word_list)
     negged_tokens = negged_sentence.split()
 
-    org_tokens = []
     token_pair_list = []
     
     for word in negged_tokens:
@@ -98,9 +97,36 @@ def negate(word_list):
             negation = True
             word = word[4:]
         token_pair_list.append((word, negation))
-        org_tokens.append(word)
     
-    return org_tokens, token_pair_list
+    return token_pair_list
+
+                
+
+## Disambiguate each tweet with multicore processing
+
+def GetDisambiguation(tweet_sentence):
+    cleaned_tweet = p.clean(tweet_sentence)
+    replaced_tweet = replace_word(cleaned_tweet)
+
+    # replaced_tweet_list = replaced_tweet.split(" ")
+    
+    ## Can replace this by using other WSD options (different Lesk algorithms / similarity options)
+
+    # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+
+    da_token_list = []
+    for pair in da_token_pair_list:
+        da_token_list.append(pair[0])
+    
+    token_negation_pair_list = negate(da_token_list)
+
+    print(da_token_pair_list)
+    print(len(da_token_pair_list))
+    print(token_negation_pair_list)
+    print(len(token_negation_pair_list))
+
+    return da_token_pair_list, token_negation_pair_list
 
 
 
@@ -110,26 +136,142 @@ synset_list = list(wn.all_synsets())
 
 all_pairs_from_definition = []
 
+
+
+
 # for ss in tqdm([wn.synset('amazing.s.02'), wn.synset('good.a.01')]):
-for ss in tqdm(synset_list):
-    df = ss.definition()
+# for ss in tqdm(synset_list):
+#     df = ss.definition()
     
-    # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    curr_df_pair_list = disambiguate(df, cosine_lesk)
-    # curr_df_pair_list = disambiguate(df, max_similarity, similarity_option='jcn')
+#     # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+#     curr_df_pair_list = disambiguate(df, cosine_lesk)
+#     # curr_df_pair_list = disambiguate(df, max_similarity, similarity_option='jcn')
 
-    df_pair_txt_list = []
-    for curr_df_pair in curr_df_pair_list:
-        if curr_df_pair[1] is None:
-            df_pair_txt_list.append(curr_df_pair)
-        else:
-            df_pair_txt_list.append((curr_df_pair[0], curr_df_pair[1].name()))
-    all_pairs_from_definition.append((ss.name(), df_pair_txt_list))
+#     df_pair_txt_list = []
+#     for curr_df_pair in curr_df_pair_list:
+#         if curr_df_pair[1] is None:
+#             df_pair_txt_list.append(curr_df_pair)
+#         else:
+#             df_pair_txt_list.append((curr_df_pair[0], curr_df_pair[1].name()))
+#     all_pairs_from_definition.append((ss.name(), df_pair_txt_list))
 
-with open('all_wn_synset_definition_da_cosine.txt', 'w') as fp:
-    fp.write(all_pairs_from_definition)
 
-pickle.dump( all_pairs_from_definition, open( "all_wn_synset_definition_da_cosine2.p", "wb" ) )
+from multiprocessing import Process, Queue, Manager
+import pickle
+
+
+
+manager = Manager()
+result_q = Queue()
+
+def doDisambiguation(num, l, method='cosine_lesk'):
+    with open('./wsd_result/ss_def_wsd_' + method + '_' + str(num) + '.txt', 'w') as fp:
+        for ss in tqdm(l):
+            fp.write(ss.name())
+            fp.write("\n") 
+            fp.write(ss.definition())
+            fp.write("\n") 
+            da_token_pair_list, token_negation_pair_list = GetDisambiguation(ss.definition())
+            for i in range(len(da_token_pair_list)):
+                if len(da_token_pair_list[i][0]) > 0:
+                    fp.write("%s  " % da_token_pair_list[i][0])
+                else:
+                    fp.write("_  ")
+                fp.write("%s  " % da_token_pair_list[i][1])
+                fp.write("%s  " % token_negation_pair_list[i][1])
+            fp.write("\n") 
+
+    print(str(num) + ' : file saved')
+    print('done')        
+
+
+num_cpu = 16
+num_one_prc = 7500
+
+prc = []
+
+for i in range(num_cpu):
+    prc.append(Process(target=doDisambiguation, args=(i+1, synset_list[i*num_one_prc:(i+1)*num_one_prc])))
+
+
+for i in range(num_cpu):
+    prc[i].start()
+
+
+for i in range(num_cpu):
+    prc[i].join()
+
+# p1 = Process(target=doDisambiguation, args=(1, synset_list[:1500]))
+# p2 = Process(target=doDisambiguation, args=(2, synset_list[1500:3000]))
+# p3 = Process(target=doDisambiguation, args=(3, synset_list[3000:4500]))
+# p4 = Process(target=doDisambiguation, args=(4, synset_list[4500:6000]))
+# p5 = Process(target=doDisambiguation, args=(5, synset_list[6000:7500]))
+# p6 = Process(target=doDisambiguation, args=(6, synset_list[7500:9000]))
+# p7 = Process(target=doDisambiguation, args=(7, synset_list[9000:10500]))
+# p8 = Process(target=doDisambiguation, args=(8, synset_list[10500:]))
+
+# p1 = Process(target=doDisambiguation, args=(1, synset_list[:2]))
+# p2 = Process(target=doDisambiguation, args=(2, synset_list[2:4]))
+# p3 = Process(target=doDisambiguation, args=(3, synset_list[4:6]))
+# p4 = Process(target=doDisambiguation, args=(4, synset_list[6:8]))
+# p5 = Process(target=doDisambiguation, args=(5, synset_list[8:10]))
+# p6 = Process(target=doDisambiguation, args=(6, synset_list[10:12]))
+# p7 = Process(target=doDisambiguation, args=(7, synset_list[12:14]))
+# p8 = Process(target=doDisambiguation, args=(8, synset_list[14:16]))
+
+
+# p1.start()
+# p2.start()
+# p3.start()
+# p4.start()
+# p5.start()
+# p6.start()
+# p7.start()
+# p8.start()
+
+
+# p1.join()
+# p2.join()
+# p3.join()
+# p4.join()
+# p5.join()
+# p6.join()
+# p7.join()
+# p8.join()
+
+
+print('Done')
+
+
+
+
+
+
+
+
+
+
+
+
+# for ss in tqdm(synset_list):
+#     df = ss.definition()
+    
+#     # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+#     curr_df_pair_list = disambiguate(df, cosine_lesk)
+#     # curr_df_pair_list = disambiguate(df, max_similarity, similarity_option='jcn')
+
+#     df_pair_txt_list = []
+#     for curr_df_pair in curr_df_pair_list:
+#         if curr_df_pair[1] is None:
+#             df_pair_txt_list.append(curr_df_pair)
+#         else:
+#             df_pair_txt_list.append((curr_df_pair[0], curr_df_pair[1].name()))
+#     all_pairs_from_definition.append((ss.name(), df_pair_txt_list))
+
+# with open('all_wn_synset_definition_da_cosine.txt', 'w') as fp:
+#     fp.write(all_pairs_from_definition)
+
+# pickle.dump( all_pairs_from_definition, open( "all_wn_synset_definition_da_cosine2.p", "wb" ) )
 
 # with open('all_wn_synset_definition_da_jcn.txt', 'w') as fp:
 #     fp.write(all_pairs_from_definition)

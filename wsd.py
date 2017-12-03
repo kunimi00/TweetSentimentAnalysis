@@ -165,14 +165,10 @@ import pickle
 manager = Manager()
 result_q = Queue()
 
-def doDisambiguation(num, l):
-
-<<<<<<< HEAD
-    with open('./wsd_result/wsd_cosine_lesk' + str(num) + '.txt', 'w') as fp:
-=======
+def doDisambiguation(num, l, method):
+    with open('./wsd_result/wsd_' + method + '_' + str(num) + '.txt', 'w') as fp:
     # with open(str(num) + '_wsd_cosine_lesk.txt', 'w') as fp:
-    with open(str(num) + '_wsd_res_similarity.txt', 'w') as fp:
->>>>>>> 9e13a126ec945d5fdfbfd312a4f26501fde42e97
+
         for tw in tqdm(l):
             da_token_pair_list, token_negation_pair_list = GetDisambiguation(tw)
             for i in range(len(da_token_pair_list)):
@@ -186,8 +182,6 @@ def doDisambiguation(num, l):
 
     print(str(num) + ' : file saved')
     print('done')        
-
-
 
 da_pair_list = []
 

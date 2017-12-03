@@ -1,0 +1,30 @@
+greedy.s.03
+wanting to eat or drink more than one can reasonably consume
+wanting  Synset('desire.v.01')  False  to  None  False  eat  Synset('eat.v.01')  False  or  None  False  drink  Synset('drink.v.01')  False  more  None  False  than  None  False  one  Synset('one.n.01')  False  can  None  False  reasonably  None  False  consume  Synset('devour.v.03')  False  
+hoggish.s.01
+resembling swine; coarsely gluttonous or greedy
+resembling  Synset('resemble.v.01')  False  swine  Synset('swine.n.01')  False  ;  None  False  coarsely  Synset('coarsely.r.01')  False  gluttonous  Synset('gluttonous.a.01')  False  or  None  False  greedy  None  False  
+overgreedy.s.01
+excessively gluttonous
+excessively  Synset('excessively.r.01')  False  gluttonous  Synset('gluttonous.a.01')  False  
+abstract.a.01
+existing only in the mind; separated from embodiment
+existing  Synset('exist.v.01')  False  only  None  False  in  None  False  the  None  False  mind  Synset('mind.n.01')  False  ;  None  False  separated  Synset('separate.v.01')  False  from  None  False  embodiment  Synset('embodiment.n.01')  False  
+conceptional.s.01
+being of the nature of a notion or concept
+being  None  False  of  None  False  the  None  False  nature  Synset('nature.n.01')  False  of  None  False  a  None  False  notion  Synset('impression.n.01')  False  or  None  False  concept  Synset('concept.n.01')  False  
+conceptual.s.01
+being or characterized by concepts or their formation
+being  None  False  or  None  False  characterized  Synset('qualify.v.06')  False  by  None  False  concepts  Synset('concept.n.01')  False  or  None  False  their  None  False  formation  Synset('formation.n.01')  False  
+ideal.s.02
+constituting or existing only in the form of an idea or mental image or conception
+constituting  Synset('constitute.v.01')  False  or  None  False  existing  Synset('exist.v.01')  False  only  None  False  in  None  False  the  None  False  form  Synset('form.n.01')  False  of  None  False  an  None  False  idea  Synset('idea.n.01')  False  or  None  False  mental  Synset('mental.a.01')  False  image  Synset('image.n.01')  False  or  None  False  conception  Synset('concept.n.01')  False  
+ideological.s.02
+concerned with or suggestive of ideas
+concerned  Synset('refer.v.02')  False  with  None  False  or  None  False  suggestive  None  False  of  None  False  ideas  Synset('idea.n.01')  False  
+concrete.a.01
+capable of being perceived by the senses; not abstract or imaginary
+capable  Synset('capable.a.01')  False  of  None  False  being  None  False  perceived  Synset('perceive.v.01')  False  by  None  False  the  None  False  senses  Synset('sen.n.01')  False  ;  None  False  not  None  False  abstract  Synset('abstract.v.01')  False  or  None  False  imaginary  None  False  
+objective.s.04
+belonging to immediate experience of actual things or events
+belonging  Synset('belong.v.01')  False  to  None  False  immediate  None  False  eerience  None  False  of  None  False  actual  Synset('actual.a.01')  False  things  Synset('thing.n.01')  False  or  None  False  events  Synset('event.n.01')  False  

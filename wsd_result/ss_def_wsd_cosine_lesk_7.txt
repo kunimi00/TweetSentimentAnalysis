@@ -1,0 +1,30 @@
+real.s.04
+capable of being treated as fact
+capable  Synset('capable.a.01')  False  of  None  False  being  None  False  treated  Synset('treat.v.01')  False  as  None  False  fact  Synset('fact.n.01')  False  
+abundant.a.01
+present in great quantity
+present  Synset('present.n.01')  False  in  None  False  great  None  False  quantity  Synset('measure.n.02')  False  
+abounding.s.01
+existing in abundance
+existing  Synset('exist.v.01')  False  in  None  False  abundance  Synset('abundance.n.01')  False  
+ample.s.02
+affording an abundant supply
+affording  Synset('afford.v.01')  False  an  None  False  abundant  Synset('abundant.a.01')  False  supply  Synset('supply.n.01')  False  
+copious.s.01
+large in number or quantity (especially of discourse)
+large  Synset('large.a.01')  False  in  None  False  number  Synset('number.n.01')  False  or  None  False  quantity  Synset('measure.n.02')  False  (  None  False  especially  Synset('particularly.r.01')  False  of  None  False  discourse  Synset('discourse.n.01')  False  )  None  False  
+easy.s.12
+obtained with little effort or sacrifice, often obtained illegally
+obtained  Synset('obtain.v.01')  False  with  None  False  little  Synset('small.a.01')  False  effort  Synset('attempt.n.01')  False  or  None  False  sacrifice  Synset('forfeit.n.03')  False  ,  None  False  often  Synset('frequently.r.01')  False  obtained  Synset('obtain.v.01')  False  illegally  Synset('illegally.r.01')  False  
+exuberant.s.03
+produced or growing in extreme abundance
+produced  Synset('produce.v.01')  False  or  None  False  growing  Synset('turn.v.07')  False  in  None  False  extreme  None  False  abundance  Synset('abundance.n.01')  False  
+thick.s.10
+abounding; having a lot of
+abounding  Synset('abound.v.01')  False  ;  None  False  having  None  False  a  None  False  lot  Synset('batch.n.02')  False  of  None  False  
+long.s.09
+having or being more than normal or necessary:"long on brains"
+having  None  False  or  None  False  being  None  False  more  None  False  than  None  False  normal  Synset('normal.a.01')  False  or  None  False  necessary  Synset('necessary.a.01')  False  :  None  False  ''  None  False  long  Synset('long.r.01')  False  on  None  False  brains  Synset('brain.n.01')  False  ''  None  False  
+overabundant.s.01
+excessively abundant
+excessively  Synset('excessively.r.01')  False  abundant  Synset('abundant.a.01')  False  

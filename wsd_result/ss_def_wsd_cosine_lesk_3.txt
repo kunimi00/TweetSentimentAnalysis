@@ -1,0 +1,30 @@
+full-length.s.02
+complete
+complete  Synset('complete.a.01')  False  
+absolute.a.01
+perfect or complete or pure
+perfect  Synset('perfective.n.01')  False  or  None  False  complete  Synset('complete.a.01')  False  or  None  False  pure  None  False  
+direct.s.10
+lacking compromising or mitigating elements; exact
+lacking  Synset('miss.v.06')  False  compromising  None  False  or  None  False  mitigating  None  False  elements  Synset('component.n.01')  False  ;  None  False  exact  Synset('demand.v.03')  False  
+implicit.s.02
+being without doubt or reserve
+being  None  False  without  None  False  doubt  Synset('doubt.n.01')  False  or  None  False  reserve  Synset('modesty.n.02')  False  
+infinite.s.04
+total and all-embracing
+total  None  False  and  None  False  all-embracing  None  False  
+living.s.03
+(informal) absolute
+(  None  False  informal  Synset('informal.a.01')  False  )  None  False  absolute  Synset('absolute.n.01')  False  
+relative.a.01
+estimated by comparison; not absolute or complete
+estimated  Synset('estimate.v.01')  False  by  None  False  comparison  Synset('comparison.n.01')  False  ;  None  False  not  None  False  absolute  None  False  or  None  False  complete  Synset('complete.v.01')  False  
+relational.s.01
+having a relation or being related
+having  None  False  a  None  False  relation  Synset('relation.n.01')  False  or  None  False  being  None  False  related  Synset('associate.v.01')  False  
+absorbent.a.01
+having power or capacity or tendency to absorb or soak up something (liquids or energy etc.)
+having  None  False  power  Synset('power.n.01')  False  or  None  False  capacity  Synset('capacity.n.01')  False  or  None  False  tendency  Synset('inclination.n.01')  False  to  None  False  absorb  Synset('absorb.v.01')  False  or  None  False  soak  Synset('soak.v.01')  False  up  None  False  something  None  False  (  None  False  liquids  Synset('liquid.n.01')  False  or  None  False  energy  Synset('energy.n.01')  False  etc  None  False  .  None  False  )  None  False  
+absorbefacient.s.01
+inducing or promoting absorption
+inducing  Synset('induce.v.01')  False  or  None  False  promoting  Synset('promote.v.01')  False  absorption  Synset('absorption.n.01')  False  

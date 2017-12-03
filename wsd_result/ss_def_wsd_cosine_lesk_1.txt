@@ -1,0 +1,30 @@
+able.a.01
+(usually followed by `to') having the necessary means or skill or know-how or authority to do something
+(  None  False  usually  Synset('normally.r.01')  False  followed  Synset('follow.v.01')  False  by  None  False  `to  None  False  '  None  False  )  None  False  having  None  False  the  None  False  necessary  Synset('necessary.a.01')  False  means  Synset('mean.n.01')  False  or  None  False  skill  None  False  or  None  False  know-how  None  False  or  None  False  authority  Synset('authority.n.01')  False  to  None  False  do  None  False  something  None  False  
+unable.a.01
+(usually followed by `to') not having the necessary means or skill or know-how
+(  None  False  usually  Synset('normally.r.01')  False  followed  Synset('follow.v.01')  False  by  None  False  `to  None  False  '  None  False  )  None  False  not  None  False  having  None  True  the  None  True  necessary  Synset('necessary.a.01')  True  means  Synset('mean.n.01')  True  or  None  True  skill  None  True  or  None  True  know-how  None  True  
+abaxial.a.01
+facing away from the axis of an organ or organism
+facing  Synset('confront.v.02')  False  away  Synset('away.r.01')  False  from  None  False  the  None  False  axis  Synset('axis.n.01')  False  of  None  False  an  None  False  organ  Synset('organ.n.01')  False  or  None  False  organism  Synset('organism.n.01')  False  
+adaxial.a.01
+nearest to or facing toward the axis of an organ or organism
+nearest  Synset('near.a.01')  False  to  None  False  or  None  False  facing  Synset('confront.v.02')  False  toward  None  False  the  None  False  axis  Synset('axis.n.01')  False  of  None  False  an  None  False  organ  Synset('organ.n.01')  False  or  None  False  organism  Synset('organism.n.01')  False  
+acroscopic.a.01
+facing or on the side toward the apex
+facing  Synset('confront.v.02')  False  or  None  False  on  None  False  the  None  False  side  Synset('side.n.01')  False  toward  None  False  the  None  False  apex  Synset('vertex.n.02')  False  
+basiscopic.a.01
+facing or on the side toward the base
+facing  Synset('confront.v.02')  False  or  None  False  on  None  False  the  None  False  side  Synset('side.n.01')  False  toward  None  False  the  None  False  base  Synset('base.n.01')  False  
+abducent.a.01
+especially of muscles; drawing away from the midline of the body or from an adjacent part
+especially  Synset('particularly.r.01')  False  of  None  False  muscles  Synset('muscle.n.01')  False  ;  None  False  drawing  Synset('pull.v.01')  False  away  Synset('away.r.01')  False  from  None  False  the  None  False  midline  Synset('midplane.n.01')  False  of  None  False  the  None  False  body  Synset('body.n.01')  False  or  None  False  from  None  False  an  None  False  adjacent  None  False  part  Synset('part.n.01')  False  
+adducent.a.01
+especially of muscles; bringing together or drawing toward the midline of the body or toward an adjacent part
+especially  Synset('particularly.r.01')  False  of  None  False  muscles  Synset('muscle.n.01')  False  ;  None  False  bringing  Synset('bring.v.01')  False  together  Synset('together.r.01')  False  or  None  False  drawing  Synset('pull.v.01')  False  toward  None  False  the  None  False  midline  Synset('midplane.n.01')  False  of  None  False  the  None  False  body  Synset('body.n.01')  False  or  None  False  toward  None  False  an  None  False  adjacent  None  False  part  Synset('part.n.01')  False  
+nascent.a.01
+being born or beginning
+being  None  False  born  Synset('bear.v.01')  False  or  None  False  beginning  Synset('get_down.v.07')  False  
+emergent.s.02
+coming into existence
+coming  Synset('come.v.01')  False  into  None  False  existence  Synset('being.n.01')  False  

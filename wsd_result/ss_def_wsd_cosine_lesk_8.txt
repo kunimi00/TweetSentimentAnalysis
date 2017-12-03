@@ -1,0 +1,30 @@
+plentiful.s.01
+existing in great number or quantity
+existing  Synset('exist.v.01')  False  in  None  False  great  None  False  number  Synset('number.n.01')  False  or  None  False  quantity  Synset('measure.n.02')  False  
+rampant.s.03
+(of a plant) having a lush and unchecked growth
+(  None  False  of  None  False  a  None  False  plant  Synset('plant.n.01')  False  )  None  False  having  None  False  a  None  False  lush  Synset('alcoholic.n.01')  False  and  None  False  unchecked  None  False  growth  Synset('growth.n.01')  False  
+rank.s.05
+growing profusely
+growing  Synset('turn.v.07')  False  profusely  Synset('abundantly.r.01')  False  
+superabundant.s.01
+most excessively abundant
+most  None  False  excessively  Synset('excessively.r.01')  False  abundant  Synset('abundant.a.01')  False  
+teeming.s.01
+abundantly filled with especially living things
+abundantly  Synset('abundantly.r.01')  False  filled  Synset('fill.v.01')  False  with  None  False  especially  Synset('particularly.r.01')  False  living  Synset('populate.v.01')  False  things  Synset('thing.n.01')  False  
+torrential.s.03
+pouring in abundance
+pouring  Synset('pour.v.01')  False  in  None  False  abundance  Synset('abundance.n.01')  False  
+verdant.s.01
+characterized by abundance of verdure
+characterized  Synset('qualify.v.06')  False  by  None  False  abundance  Synset('abundance.n.01')  False  of  None  False  verdure  Synset('greenery.n.01')  False  
+scarce.a.01
+deficient in quantity or number compared with the demand
+deficient  None  False  in  None  False  quantity  Synset('measure.n.02')  False  or  None  False  number  Synset('number.n.01')  False  compared  Synset('compare.v.01')  False  with  None  False  the  None  False  demand  Synset('demand.n.01')  False  
+rare.s.03
+not widely distributed
+not  None  False  widely  Synset('widely.r.01')  False  distributed  Synset('distribute.v.01')  False  
+tight.s.06
+affected by scarcity and expensive to borrow
+affected  Synset('affect.v.01')  False  by  None  False  scarcity  Synset('scarcity.n.01')  False  and  None  False  eensive  None  False  to  None  False  borrow  Synset('borrow.v.01')  False  
