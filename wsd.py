@@ -142,8 +142,8 @@ def GetDisambiguation(tweet_sentence):
     
     ## Can replace this by using other WSD options (different Lesk algorithms / similarity options)
 
-    # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
-    da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
+    da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    # da_token_pair_list = disambiguate(replaced_tweet, cosine_lesk)
 
     da_token_list = []
     for pair in da_token_pair_list:
@@ -167,7 +167,8 @@ result_q = Queue()
 
 def doDisambiguation(num, l):
 
-    with open(str(num) + '_wsd_cosine_lesk.txt', 'w') as fp:
+    # with open(str(num) + '_wsd_cosine_lesk.txt', 'w') as fp:
+    with open(str(num) + '_wsd_res_similarity.txt', 'w') as fp:
         for tw in tqdm(l):
             da_token_pair_list, token_negation_pair_list = GetDisambiguation(tw)
             for i in range(len(da_token_pair_list)):
