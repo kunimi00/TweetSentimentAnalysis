@@ -57,7 +57,7 @@ loadSavedGraph = False
 loaded_all_tweets_list = []
 for i in range(8):
     ## Either cosine_lesk ones OR res_similarity ones
-    with open(str(i+1) + '_wsd_cosine_lesk.txt', 'r') as f:
+    with open('wsd_cosine_lesk_' + str(i+1) + '.txt', 'r') as f:
         tmp_str = f.read()
         tmp_list = tmp_str.split('\n')
         tmp_list = tmp_list[:-1]
