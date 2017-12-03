@@ -115,6 +115,7 @@ for ss in tqdm(synset_list):
     df = ss.definition()
     
     # da_token_pair_list = disambiguate(replaced_tweet, max_similarity, similarity_option='res')
+    # curr_df_pair_list = disambiguate(df, cosine_lesk)
     curr_df_pair_list = disambiguate(df, max_similarity, similarity_option='jcn')
 
     df_pair_txt_list = []
@@ -125,13 +126,13 @@ for ss in tqdm(synset_list):
             df_pair_txt_list.append((curr_df_pair[0], curr_df_pair[1].name()))
     all_pairs_from_definition.append((ss.name(), df_pair_txt_list))
 
-# with open('all_wn_synset_definition_da_cosine.txt', 'w') as fp:
-#     fp.write(all_pairs_from_definition)
-
-# pickle.dump( all_pairs_from_definition, open( "all_wn_synset_definition_da_cosine.p", "wb" ) )
-
-with open('all_wn_synset_definition_da_jcn.txt', 'w') as fp:
+with open('all_wn_synset_definition_da_cosine.txt', 'w') as fp:
     fp.write(all_pairs_from_definition)
 
-pickle.dump( all_pairs_from_definition, open( "all_wn_synset_definition_da_jcn.p", "wb" ) )
+pickle.dump( all_pairs_from_definition, open( "all_wn_synset_definition_da_cosine2.p", "wb" ) )
+
+# with open('all_wn_synset_definition_da_jcn.txt', 'w') as fp:
+#     fp.write(all_pairs_from_definition)
+
+# pickle.dump( all_pairs_from_definition, open( "all_wn_synset_definition_da_jcn.p", "wb" ) )
 
