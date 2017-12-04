@@ -48,7 +48,6 @@ from pywsd.similarity import max_similarity
 
 
 ## Negation
-
 replace_dict = {
     "don't": "do not",
     "won't": "will not",
