@@ -63,10 +63,25 @@ for ss_pair in ss_df_ss_pair_list:
     curr_sent.extend(ss_pair[1])
     sentences.append(curr_sent)
 
+syn_model_300 = gensim.models.Word2Vec(sentences, size=300, window=30, min_count=1, workers=8, sg=1, iter=30)
 
-s2v_model = gensim.models.Word2Vec(sentences, size=500, window=30, min_count=1, workers=8, sg=1)
+syn_model_500 = gensim.models.Word2Vec(sentences, size=500, window=30, min_count=1, workers=8, sg=1, iter=30)
+
+syn_model_1000 = gensim.models.Word2Vec(sentences, size=1000, window=30, min_count=1, workers=8, sg=1, iter=30)
+
+fname = 'model_syn2vec_300'
+syn_model_300.save(fname)
+
+fname = 'model_syn2vec_500'
+syn_model_500.save(fname)
+
+fname = 'model_syn2vec_1000'
+syn_model_1000.save(fname)
 
 
+
+
+'''
 
 tsne = TSNE(n_components=2)
 
@@ -94,6 +109,10 @@ custom_synsets_set_neg = ['abnormal.a.01', 'abort.v.01', 'maltreatment.n.01', 'm
                     'pathetic.s.03', 'sloppy.s.01', 'malodor.n.01','reek.v.02', 'stupid.a.01', 'suck.v.04', 'awful.s.02', 'rubbish.n.01', 'weak.a.01' ]
 
 tmp_list = custom_synsets_set_pos + custom_synsets_set_neg
+
+
+
+
 
 X_pos = s2v_model[custom_synsets_set_pos]
 X_neg = s2v_model[custom_synsets_set_neg]
@@ -135,10 +154,5 @@ for i, word in enumerate(custom_synsets_set_neg[:10]):
     plt.annotate(word, xy=(X_pca[i+10, 0], X_pca[i+10, 1]), size=15)
 plt.show()
 
-
-
-
-
-
-
+'''
 
