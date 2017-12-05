@@ -63,11 +63,11 @@ for ss_pair in ss_df_ss_pair_list:
     curr_sent.extend(ss_pair[1])
     sentences.append(curr_sent)
 
-syn_model_300 = gensim.models.Word2Vec(sentences, size=300, window=30, min_count=1, workers=8, sg=1, iter=30)
+syn_model_300 = gensim.models.Word2Vec(sentences, size=300, window=30, min_count=1, workers=12, sg=1, iter=30)
 
-syn_model_500 = gensim.models.Word2Vec(sentences, size=500, window=30, min_count=1, workers=8, sg=1, iter=30)
+syn_model_500 = gensim.models.Word2Vec(sentences, size=500, window=30, min_count=1, workers=12, sg=1, iter=30)
 
-syn_model_1000 = gensim.models.Word2Vec(sentences, size=1000, window=30, min_count=1, workers=8, sg=1, iter=30)
+syn_model_1000 = gensim.models.Word2Vec(sentences, size=1000, window=30, min_count=1, workers=12, sg=1, iter=30)
 
 fname = 'model_syn2vec_300'
 syn_model_300.save(fname)

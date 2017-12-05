@@ -112,17 +112,17 @@ for df_token_pair_list in tqdm(all_ss_df_token_list):
     word_df_word_pair_list.append(curr_ss_df_ss_list)  
 
 
-def_model_300 = gensim.models.Word2Vec(word_df_word_pair_list, size=300, window=30, min_count=1, workers=8, sg=1, iter=30)
+def_model_300 = gensim.models.Word2Vec(word_df_word_pair_list, size=300, window=30, min_count=1, workers=12, sg=1, iter=30)
 
 fname = 'model_def2vec_300'
 def_model_300.save(fname)
 
-def_model_500 = gensim.models.Word2Vec(word_df_word_pair_list, size=500, window=30, min_count=1, workers=8, sg=1, iter=30)
+def_model_500 = gensim.models.Word2Vec(word_df_word_pair_list, size=500, window=30, min_count=1, workers=12, sg=1, iter=30)
 
 fname = 'model_def2vec_500'
 def_model_500.save(fname)
 
-def_model_1000 = gensim.models.Word2Vec(word_df_word_pair_list, size=500, window=30, min_count=1, workers=8, sg=1, iter=30)
+def_model_1000 = gensim.models.Word2Vec(word_df_word_pair_list, size=1000, window=30, min_count=1, workers=12, sg=1, iter=30)
 
 fname = 'model_def2vec_500'
 def_model_1000.save(fname)
